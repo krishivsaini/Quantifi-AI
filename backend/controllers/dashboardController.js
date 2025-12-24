@@ -1,7 +1,7 @@
 const Income = require('../models/income.model');
 const Expense = require('../models/expense.model');
 
-const { isValidObjectId ,Types } = require('mongoose');
+const { isValidObjectId, Types } = require('mongoose');
 
 exports.getDashboardData = async (req, res) => {
     try {
@@ -9,11 +9,11 @@ exports.getDashboardData = async (req, res) => {
         const userObjectId = new Types.ObjectId(userId);
 
         const totalIncome = await Income.aggregate([
-            { $match: { userId: userObjectId } },
+            { $match: { user: userObjectId } },
             { $group: { _id: null, total: { $sum: "$amount" } } }
         ]);
 
-        console.log("Total Income", {totalIncome, userId: isValidObjectId(userId)});
+        console.log("Total Income", { totalIncome, userId: isValidObjectId(userId) });
 
         const totalExpense = await Expense.aggregate([
             { $match: { user: userObjectId } },
@@ -23,7 +23,7 @@ exports.getDashboardData = async (req, res) => {
         // Get last 60 days income transactions
         const last60daysIncomeTransactions = await Income.find({
             user: userObjectId,
-            date: { $gte: new Date(Date.now() - 60*24*60*60*1000) }
+            date: { $gte: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000) }
         }).sort({ date: -1 });
 
         // get total income for last 60 days
@@ -32,7 +32,7 @@ exports.getDashboardData = async (req, res) => {
         // Get last 60 days expense transactions
         const last60daysExpenseTransactions = await Expense.find({
             user: userObjectId,
-            date: { $gte: new Date(Date.now() - 60*24*60*60*1000) }
+            date: { $gte: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000) }
         }).sort({ date: -1 });
 
         // get total expense for last 60 days

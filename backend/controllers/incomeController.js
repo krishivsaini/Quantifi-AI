@@ -8,8 +8,8 @@ exports.addIncome = async (req, res) => {
     try {
         const { icon, source, amount, date } = req.body;
 
-        if(!source || !amount || !date){
-            return res.status(400).json({message: "All fields are required"});
+        if (!source || !amount || !date) {
+            return res.status(400).json({ message: "All fields are required" });
         }
 
         const newIncome = new Income({
@@ -24,19 +24,19 @@ exports.addIncome = async (req, res) => {
         res.status(200).json(newIncome);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({message: "Internal server error"});
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 
 // get all income sources
 exports.getIncomes = async (req, res) => {
     const userId = req.user.id;
-    try{
-        const income = await Income.find({user: userId}).sort({date: -1});
+    try {
+        const income = await Income.find({ user: userId }).sort({ date: -1 });
         res.status(200).json(income);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({message: "Internal server error"});
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -57,12 +57,41 @@ exports.deleteIncome = async (req, res) => {
     }
 };
 
+// update income source
+exports.updateIncome = async (req, res) => {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    try {
+        const { icon, source, amount, date } = req.body;
+
+        if (!source || !amount || !date) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        const income = await Income.findOneAndUpdate(
+            { _id: id, user: userId },
+            { icon, source, amount, date },
+            { new: true }
+        );
+
+        if (!income) {
+            return res.status(404).json({ message: "Income not found" });
+        }
+
+        res.status(200).json(income);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 // download income sources as excel
 exports.downloadIncomeExcel = async (req, res) => {
     const userId = req.user.id;
     try {
         const income = await Income.find({ user: userId }).sort({ date: -1 });
-        
+
         // prepare data for excel
         const excelData = income.map(item => ({
             Source: item.source,

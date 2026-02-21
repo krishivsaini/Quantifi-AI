@@ -1,4 +1,4 @@
-import { HiOutlineHome, HiOutlineCash, HiOutlineCreditCard, HiOutlineLogout } from "react-icons/hi";
+import { HiOutlineHome, HiOutlineCash, HiOutlineCreditCard, HiOutlineLogout, HiOutlineUser } from "react-icons/hi";
 
 export const SIDE_MENU_DATA = [
     {
@@ -20,7 +20,7 @@ export const SIDE_MENU_DATA = [
         path: "/expense"
     },
     {
-        id: "04",
+        id: "05",
         label: "Logout",
         icon: HiOutlineLogout,
         path: "/logout"

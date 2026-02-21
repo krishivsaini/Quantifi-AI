@@ -4,11 +4,13 @@ import { SIDE_MENU_DATA } from '../../utils/data'
 import { useNavigate } from 'react-router-dom';
 import CharAvatar from '../Cards/CharAvatar';
 import { HiOutlineExclamation } from 'react-icons/hi';
+import ProfileModal from '../modals/ProfileModal';
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   
   const handleClick = (route) => {
     if (route === '/logout') {
@@ -38,7 +40,10 @@ const SideMenu = ({ activeMenu }) => {
         }}
       >
         {/* User Profile Card */}
-        <div className='bg-gradient-to-br from-primary/5 to-primary-light/10 rounded-2xl p-5 mb-8'>
+        <div 
+          onClick={() => setShowProfileModal(true)}
+          className='bg-gradient-to-br from-primary/5 to-primary-light/10 rounded-2xl p-5 mb-8 cursor-pointer hover:bg-primary/10 transition-colors duration-300 border border-transparent hover:border-primary/20'
+        >
           <div className='flex items-center gap-4'>
             {user?.profileImageUrl ? (
               <img
@@ -146,6 +151,12 @@ const SideMenu = ({ activeMenu }) => {
           </div>
         </div>
       )}
+
+      {/* Profile Modal */}
+      <ProfileModal 
+        isOpen={showProfileModal} 
+        onClose={() => setShowProfileModal(false)} 
+      />
     </>
   )
 }

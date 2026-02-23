@@ -155,7 +155,7 @@ Provide insights in this JSON format (respond ONLY with valid JSON, no markdown)
 
         console.log('Calling Gemini API for user:', userId);
         const ai = getGenAI();
-        const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+        const model = ai.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
@@ -204,7 +204,7 @@ Provide insights in this JSON format (respond ONLY with valid JSON, no markdown)
         return res.json(fallbackResponse);
 
     } catch (error) {
-        console.error('AI Insights Error:', error.message);
+        console.error('AI Insights Error:', error);
         // Return graceful fallback instead of 500
         return res.json({
             success: true,
@@ -273,7 +273,7 @@ User's Question: "${message}"
 Provide a helpful, concise response (2-4 sentences). Be friendly and use emojis sparingly. If the question is not related to finances, politely redirect to financial topics.`;
 
         const ai = getGenAI();
-        const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+        const model = ai.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
@@ -345,7 +345,7 @@ Suggest the most appropriate category from this list: ${categories.join(', ')}
 Respond with ONLY the category name, nothing else.`;
 
         const ai = getGenAI();
-        const model = ai.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+        const model = ai.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const suggestedCategory = response.text().trim();

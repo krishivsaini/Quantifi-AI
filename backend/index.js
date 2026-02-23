@@ -18,6 +18,7 @@ app.use(
             "http://localhost:5174",
             "http://localhost:3000",
             "http://localhost:8000",
+            "https://quantifi-ai.vercel.app",
             process.env.CLIENT_URL
         ].filter(Boolean),
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

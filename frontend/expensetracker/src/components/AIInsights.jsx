@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axiosInstance from '../utils/axiosInstance'
 import { API_PATHS } from '../utils/apiPaths'
-import { HiOutlineSparkles, HiOutlineRefresh, HiOutlineLightBulb, HiOutlineExclamation, HiOutlineCheckCircle, HiOutlineInformationCircle } from 'react-icons/hi'
+import { HiOutlineSparkles, HiOutlineRefresh, HiOutlineLightBulb, HiOutlineExclamation, HiOutlineCheckCircle, HiOutlineInformationCircle, HiOutlineKey, HiOutlineChartBar, HiOutlineTrendingUp, HiOutlineCash, HiOutlineShieldCheck } from 'react-icons/hi'
+
+const iconMap = {
+  bulb: HiOutlineLightBulb,
+  warning: HiOutlineExclamation,
+  check: HiOutlineCheckCircle,
+  info: HiOutlineInformationCircle,
+  key: HiOutlineKey,
+  chart: HiOutlineChartBar,
+  trending: HiOutlineTrendingUp,
+  cash: HiOutlineCash,
+  shield: HiOutlineShieldCheck,
+  sparkles: HiOutlineSparkles,
+}
 
 const typeStyles = {
   tip: { bg: 'bg-primary/10', border: 'border-primary/20', iconColor: 'text-primary' },
@@ -114,7 +127,10 @@ const AIInsights = () => {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className='flex items-start gap-3'>
-                <span className='text-2xl'>{insight.icon}</span>
+                {(() => {
+                  const IconComponent = iconMap[insight.icon] || HiOutlineLightBulb;
+                  return <IconComponent className={`text-2xl mt-0.5 flex-shrink-0 ${style.iconColor}`} />;
+                })()}
                 <div className='flex-1'>
                   <h4 className='font-semibold text-text-primary mb-1'>{insight.title}</h4>
                   <p className='text-sm text-text-secondary'>{insight.description}</p>

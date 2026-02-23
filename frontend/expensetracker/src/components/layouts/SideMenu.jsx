@@ -3,8 +3,8 @@ import { UserContext } from '../../context/userContext';
 import { SIDE_MENU_DATA } from '../../utils/data'
 import { useNavigate } from 'react-router-dom';
 import CharAvatar from '../Cards/CharAvatar';
-import { HiOutlineExclamation } from 'react-icons/hi';
 import ProfileModal from '../modals/ProfileModal';
+import LogoutCard from '../modals/LogoutCard';
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = useContext(UserContext);
@@ -114,43 +114,12 @@ const SideMenu = ({ activeMenu }) => {
         </div>
       </div>
 
-      {/* Logout Confirmation Modal */}
-      {showLogoutConfirm && (
-        <div className='fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50'>
-          <div 
-            className='rounded-2xl p-6 w-full max-w-sm mx-4 shadow-2xl animate-scale-in'
-            style={{ backgroundColor: 'var(--color-surface)' }}
-          >
-            <div className='flex flex-col items-center text-center'>
-              <div className='w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center mb-4'>
-                <HiOutlineExclamation className='text-3xl text-danger' />
-              </div>
-              <h3 style={{ color: 'var(--color-text-primary)' }} className='text-xl font-bold mb-2'>Logout?</h3>
-              <p style={{ color: 'var(--color-text-secondary)' }} className='mb-6'>
-                Are you sure you want to logout? You'll need to login again to access your account.
-              </p>
-              <div className='flex gap-3 w-full'>
-                <button
-                  onClick={cancelLogout}
-                  className='flex-1 py-3 px-4 rounded-xl font-medium transition-colors'
-                  style={{ 
-                    border: '1px solid var(--color-border)', 
-                    color: 'var(--color-text-secondary)' 
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className='flex-1 py-3 px-4 rounded-xl bg-danger text-white font-medium hover:bg-danger/90 transition-colors'
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Logout Confirmation Card */}
+      <LogoutCard
+        isOpen={showLogoutConfirm}
+        onConfirm={handleLogout}
+        onCancel={cancelLogout}
+      />
 
       {/* Profile Modal */}
       <ProfileModal 

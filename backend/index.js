@@ -30,6 +30,11 @@ app.use(express.json())
 
 connectDB();
 
+// Health check endpoint for Render
+app.get('/', (req, res) => {
+    res.status(200).json({ status: 'OK', message: 'API is running' });
+});
+
 // Define routes
 app.use("/api/v1/auth", authRoutes);
 app.use('/api/v1/income', incomeRoutes);

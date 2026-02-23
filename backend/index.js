@@ -11,21 +11,7 @@ const aiRoutes = require('./routes/aiRoutes');
 const app = express();
 
 // Middleware to handle CORS 
-app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            "http://localhost:5174",
-            "http://localhost:3000",
-            "http://localhost:8000",
-            "https://quantifi-ai.vercel.app",
-            process.env.CLIENT_URL
-        ].filter(Boolean),
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        credentials: true
-    })
-)
+app.use(cors())
 
 app.use(express.json())
 

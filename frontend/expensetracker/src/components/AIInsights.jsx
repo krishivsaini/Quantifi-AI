@@ -36,7 +36,12 @@ const AIInsights = () => {
       setInsights(response.data)
     } catch (err) {
       console.error('Failed to fetch insights:', err)
-      setError('Unable to generate insights. Make sure you have a Gemini API key configured.')
+      const isTimeout = err.code === 'ECONNABORTED'
+      setError(
+        isTimeout
+          ? 'Insights are taking longer than usual to generate. Please try again.'
+          : 'Unable to generate insights right now. Please try again in a moment.'
+      )
     } finally {
       setLoading(false)
     }

@@ -1,5 +1,13 @@
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const User = require('../models/user.model');
+const Income = require('../models/income.model');
+const Expense = require('../models/expense.model');
+const { incomes: guestIncomes, expenses: guestExpenses } = require('../utils/guestSeedData');
+
+const GUEST_EMAIL = 'guest@demo.com';
+const GUEST_NAME = 'Demo Reviewer';
+
 // generate JWT token
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -62,6 +70,45 @@ exports.getUserInfo = async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+// Login as Guest (demo) — auto-provisions the demo account
+// and seeds it with sample data on first use so reviewers
+// land on a populated dashboard without signing up.
+exports.loginGuest = async (req, res) => {
+    try {
+        let user = await User.findOne({ email: GUEST_EMAIL });
+
+        if (!user) {
+            user = await User.create({
+                name: GUEST_NAME,
+                email: GUEST_EMAIL,
+                password: crypto.randomBytes(24).toString('hex'),
+                profileImageUrl: null
+            });
+        }
+
+        // Refresh seed data so the demo always reflects the
+        // last 60 days, even if older runs left stale records.
+        await Promise.all([
+            Income.deleteMany({ user: user._id }),
+            Expense.deleteMany({ user: user._id })
+        ]);
+        await Promise.all([
+            Income.insertMany(guestIncomes.map(i => ({ ...i, user: user._id }))),
+            Expense.insertMany(guestExpenses.map(e => ({ ...e, user: user._id })))
+        ]);
+
+        res.status(200).json({
+            id: user._id,
+            user,
+            token: generateToken(user._id),
+            isGuest: true
+        });
+    } catch (error) {
+        console.error('Guest login failed:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 }
 

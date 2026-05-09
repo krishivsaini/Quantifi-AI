@@ -3,6 +3,7 @@ export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8
 export const API_PATHS = {
     AUTH: {
         LOGIN: '/api/v1/auth/login',
+        GUEST_LOGIN: '/api/v1/auth/guest',
         REGISTER: '/api/v1/auth/register',
         GET_USER_INFO: '/api/v1/auth/user',
         UPDATE_PROFILE: '/api/v1/auth/update'

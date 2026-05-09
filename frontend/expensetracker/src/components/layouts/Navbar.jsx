@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { HiOutlineMenu, HiOutlineX, HiOutlineBell, HiOutlineSearch, HiOutlineMoon, HiOutlineSun, HiOutlineTrendingUp, HiOutlineTrendingDown } from 'react-icons/hi';
+import { HiOutlineMenu, HiOutlineX, HiOutlineSearch, HiOutlineMoon, HiOutlineSun, HiOutlineTrendingUp, HiOutlineTrendingDown } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import SideMenu from './SideMenu';
 import axiosInstance from '../../utils/axiosInstance';
@@ -197,11 +197,6 @@ const Navbar = ({ activeMenu }) => {
           )}
         </button>
         
-        {/* Notification Button */}
-        <button className='relative p-2.5 rounded-xl hover:bg-surface-tertiary transition-colors'>
-          <HiOutlineBell className='text-xl text-text-secondary' />
-          <span className='absolute top-2 right-2 w-2 h-2 bg-danger rounded-full'></span>
-        </button>
       </div>
       
       {/* Mobile Side Menu */}

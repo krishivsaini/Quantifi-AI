@@ -105,11 +105,16 @@ const SideMenu = ({ activeMenu }) => {
         {/* Bottom Card */}
         <div className='absolute bottom-6 left-6 right-6'>
           <div className='bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-5 text-white'>
-            <p className='text-sm font-medium mb-1'>Need Help?</p>
-            <p className='text-xs text-white/70 mb-3'>Check our documentation</p>
-            <button className='w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors'>
-              View Docs
-            </button>
+            <p className='text-sm font-medium mb-1'>Like the project?</p>
+            <p className='text-xs text-white/70 mb-3'>Check out the source on GitHub</p>
+            <a
+              href='https://github.com/krishivsaini/ExpenseTracker'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='block w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium text-center transition-colors'
+            >
+              View on GitHub
+            </a>
           </div>
         </div>
       </div>
